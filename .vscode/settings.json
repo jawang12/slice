@@ -1,19 +1,19 @@
 {
   "workbench.colorCustomizations": {
-    "titleBar.activeForeground": "#15202b",
-    "titleBar.inactiveForeground": "#15202b99",
-    "titleBar.activeBackground": "#ffc600",
-    "titleBar.inactiveBackground": "#ffc60099",
-    "activityBar.activeBackground": "#ffd133",
-    "activityBar.activeBorder": "#009f7b",
-    "activityBar.background": "#ffd133",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "titleBar.activeBackground": "#6a5acd",
+    "titleBar.inactiveBackground": "#6a5acd99",
+    "activityBar.activeBackground": "#8d81d9",
+    "activityBar.activeBorder": "#933a2c",
+    "activityBar.background": "#8d81d9",
     "activityBar.foreground": "#15202b",
     "activityBar.inactiveForeground": "#15202b99",
-    "activityBarBadge.background": "#009f7b",
+    "activityBarBadge.background": "#933a2c",
     "activityBarBadge.foreground": "#e7e7e7",
-    "statusBar.background": "#ffc600",
-    "statusBar.foreground": "#15202b",
-    "statusBarItem.hoverBackground": "#cc9e00"
+    "statusBar.background": "#6a5acd",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#8d81d9"
   },
   // These are all my auto-save configs
   "editor.formatOnSave": true,
@@ -33,5 +33,5 @@
     "javascript",
     "javascriptreact"
   ],
-  "peacock.color": "#FFC600",
+  "peacock.color": "slateblue",
 }
