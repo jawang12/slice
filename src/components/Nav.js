@@ -8,8 +8,12 @@ const StyledNav = styled.nav`
   .logo {
     transform: translateY(-25%);
   }
+  .active {
+    color: cornflowerblue;
+  }
   ul {
     margin: 0;
+    margin-top: -6rem;
     padding: 0;
     display: grid;
     grid-template-columns: 1fr 1fr auto 1fr 1fr;
@@ -44,6 +48,11 @@ const StyledNav = styled.nav`
     &:hover {
       color: cornflowerblue;
     }
+    /* if anchor tag has attribute of aria-current on it then do this 
+    &[aria-cuurrent="page"] {
+      color: var(--yellow)
+    }
+    */
   }
 `;
 
@@ -51,10 +60,14 @@ const Nav = () => (
   <StyledNav>
     <ul>
       <li>
-        <Link to="/">What's Buzzin</Link>
+        <Link to="/" activeClassName="active">
+          What's Buzzin
+        </Link>
       </li>
       <li>
-        <Link to="/pizza">Pizza Menu</Link>
+        <Link to="/pizza" activeClassName="active">
+          Pizza Menu
+        </Link>
       </li>
       <li>
         <Link to="/">
@@ -62,10 +75,14 @@ const Nav = () => (
         </Link>
       </li>
       <li>
-        <Link to="/slicemasters">Slice Masters</Link>
+        <Link to="/slicemasters" activeClassName="active">
+          Slice Masters
+        </Link>
       </li>
       <li>
-        <Link to="/order">Order Now!</Link>
+        <Link to="/order" activeClassName="active">
+          Order Now!
+        </Link>
       </li>
     </ul>
   </StyledNav>
