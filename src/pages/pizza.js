@@ -1,10 +1,5 @@
 import React from 'react';
-import Layout from '../components/Layout';
 
-const Pizza = () => (
-  <Layout>
-    <p>Welcome to the Pizza Page!</p>
-  </Layout>
-);
+const Pizza = () => <p>Welcome to the Pizza Page!</p>;
 
 export default Pizza;
