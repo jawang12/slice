@@ -1,1 +1,23 @@
-// This file is empty, but some people were reporting that it would not start unless they had an empty file. So here it is! You can delete the comment. Or replace it with your favourite shania twain lyrics.
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
+
+module.exports = {
+  siteMetadata: {
+    title: `Jimbo's Slices`,
+    siteUrl: `https://gatsby.pizza`,
+    description: `Voted by the people as the #1 pizzeria in NY.`,
+  },
+  plugins: [
+    `gatsby-plugin-styled-components`,
+    {
+      resolve: `gatsby-source-sanity`,
+      options: {
+        projectId: `7kwv5q01`,
+        dataset: `production`,
+        watchMode: true,
+        token: process.env.SANITY_TOKEN,
+      },
+    },
+  ],
+};

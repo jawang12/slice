@@ -46,7 +46,7 @@ const StyledNav = styled.nav`
     font-size: 3rem;
     text-decoration: none;
     &:hover {
-      color: cornflowerblue;
+      color: coral;
     }
     /* if anchor tag has attribute of aria-current on it then do this 
     &[aria-cuurrent="page"] {
