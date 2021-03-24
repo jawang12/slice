@@ -45,15 +45,8 @@ const StyledToppingsFilter = styled.div`
 `;
 
 const ToppingsFilter = () => {
-  const { toppings, pizzas } = useStaticQuery(graphql`
+  const { pizzas } = useStaticQuery(graphql`
     query {
-      toppings: allSanityTopping {
-        nodes {
-          name
-          vegetarian
-          id
-        }
-      }
       pizzas: allSanityPizza {
         nodes {
           toppings {
