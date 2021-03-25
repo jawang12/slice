@@ -1,4 +1,5 @@
 import path from 'path';
+import axios from 'axios';
 
 const convertPizzasToPages = async ({ graphql, actions }) => {
   // 1. CREATE A TEMPLATE
@@ -53,6 +54,38 @@ const createPizzaListByTopping = async ({ graphql, actions }) => {
       },
     });
   });
+};
+
+async function fetchBeersAndConvertToNodes({
+  actions,
+  createNodeId,
+  createContentDigest,
+}) {
+  const allBeers = (await axios.get('https://api.sampleapis.com/beers/ale'))
+    .data;
+
+  for (const beer of allBeers) {
+    const nodeMeta = {
+      id: createNodeId(`beer-${beer.name}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: 'Beer',
+        mediaType: 'application/json',
+        contentDigest: createContentDigest(beer),
+      },
+    };
+
+    actions.createNode({
+      ...beer,
+      ...nodeMeta,
+    });
+  }
+}
+
+// Sourcing Nodes - putting the data into gatsby api, nodes being a piece of data
+export const sourceNodes = async (params) => {
+  await Promise.all([fetchBeersAndConvertToNodes(params)]);
 };
 
 export const createPages = async (params) => {
