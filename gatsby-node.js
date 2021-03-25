@@ -30,10 +30,39 @@ const convertPizzasToPages = async ({ graphql, actions }) => {
   });
 };
 
+const createPizzaListByTopping = async ({ graphql, actions }) => {
+  const {
+    data: { allToppings },
+  } = await graphql(`
+    query {
+      allToppings: allSanityTopping {
+        nodes {
+          name
+        }
+      }
+    }
+  `);
+
+  allToppings.nodes.forEach((topping) => {
+    actions.createPage({
+      path: `topping/${topping.name}`,
+      component: path.resolve('./src/pages/pizza.js'),
+      context: {
+        name: topping.name,
+        nameRegEx: `/${topping.name}/i`,
+      },
+    });
+  });
+};
+
 export const createPages = async (params) => {
   // CREATE PAGES DYNAMICALLY
+  // await for all Promises to be resolved before finishing this function
+  await Promise.all([
+    convertPizzasToPages(params),
+    createPizzaListByTopping(params),
+  ]);
   // 1. PIZZAS
-  await convertPizzasToPages(params);
   // 2. TOPPINGS
   // 3. SLICEMASTERS
 };

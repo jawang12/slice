@@ -38,9 +38,18 @@ const StyledToppingsFilter = styled.div`
       background: white;
       padding: 2px 5px;
     }
-    .active {
+    /*
+    &.active {
       background: var(--yellow);
     }
+    or
+    &[aria-current="page"] {
+      ...
+    }
+    */
+  }
+  .active {
+    background: var(--yellow);
   }
 `;
 
@@ -62,8 +71,16 @@ const ToppingsFilter = () => {
 
   return (
     <StyledToppingsFilter>
+      <Link to="/pizza" activeClassName="active">
+        <span className="name">All</span>
+        <span className="count">{pizzas.nodes.length}</span>
+      </Link>
       {pizzasCountPerTopping.map((topping) => (
-        <Link to={`/topping/${topping.name}`} key={topping.id}>
+        <Link
+          to={`/topping/${topping.name}`}
+          activeClassName="active"
+          key={topping.id}
+        >
           <span className="name">{topping.name}</span>
           <span className="count">{topping.count}</span>
         </Link>
