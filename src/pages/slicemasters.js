@@ -57,8 +57,8 @@ const Slicemasters = ({ data: { slicemasters } }) => (
 export default Slicemasters;
 
 export const query = graphql`
-  query {
-    slicemasters: allSanityPerson {
+  query($skip: Int = 0, $pageSize: Int = 2) {
+    slicemasters: allSanityPerson(limit: $pageSize, skip: $skip) {
       totalCount
       nodes {
         name
@@ -78,3 +78,6 @@ export const query = graphql`
     }
   }
 `;
+
+/* if you want to explicitly allow something from a .env file to be surfaced via the front-end, you have to 
+include GATSBY_ as a prefix. */
