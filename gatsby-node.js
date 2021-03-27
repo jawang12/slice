@@ -25,15 +25,15 @@ const convertPizzasToPages = async ({ graphql, actions }) => {
       component: pizzaTemplate,
       // use context to pass data to component, prop name will be pageContext
       context: {
-        slug: pizza.slug.current
-      }
+        slug: pizza.slug.current,
+      },
     });
   });
 };
 
 const createPizzaListByTopping = async ({ graphql, actions }) => {
   const {
-    data: { allToppings }
+    data: { allToppings },
   } = await graphql(`
     query {
       allToppings: allSanityTopping {
@@ -50,8 +50,8 @@ const createPizzaListByTopping = async ({ graphql, actions }) => {
       component: path.resolve('./src/pages/pizza.js'),
       context: {
         name: topping.name,
-        nameRegEx: `/${topping.name}/i`
-      }
+        nameRegEx: `/${topping.name}/i`,
+      },
     });
   });
 };
@@ -59,7 +59,7 @@ const createPizzaListByTopping = async ({ graphql, actions }) => {
 async function fetchBeersAndConvertToNodes({
   actions,
   createNodeId,
-  createContentDigest
+  createContentDigest,
 }) {
   const allBeers = (await axios.get('https://api.sampleapis.com/beers/ale'))
     .data;
@@ -72,13 +72,13 @@ async function fetchBeersAndConvertToNodes({
       internal: {
         type: 'Beer',
         mediaType: 'application/json',
-        contentDigest: createContentDigest(beer)
-      }
+        contentDigest: createContentDigest(beer),
+      },
     };
-
+    // create new node for beer inside gql later layer
     actions.createNode({
       ...beer,
-      ...nodeMeta
+      ...nodeMeta,
     });
   }
 }
@@ -86,7 +86,7 @@ async function fetchBeersAndConvertToNodes({
 const convertSlicemastersIntoPages = async ({ actions, graphql }) => {
   // 1. Query all masters
   const {
-    data: { slicemasters }
+    data: { slicemasters },
   } = await graphql(`
     query {
       slicemasters: allSanityPerson {
@@ -103,6 +103,15 @@ const convertSlicemastersIntoPages = async ({ actions, graphql }) => {
   `);
 
   // 2. Turn each slicemasters into their own page
+  slicemasters.nodes.forEach((master) => {
+    actions.createPage({
+      path: `/slicemasters/${master.slug.current}`,
+      component: path.resolve('./src/templates/Slicemaster.js'),
+      context: {
+        slug: master.slug.current,
+      },
+    });
+  });
   // 3. Computer number of pages based on amount of masters and how many per page
   const pageSize = parseInt(process.env.GATSBY_PAGE_SIZE); // returns a string which we have to convert to a number
   const pageCount = Math.ceil(slicemasters.totalCount / pageSize);
@@ -112,12 +121,12 @@ const convertSlicemastersIntoPages = async ({ actions, graphql }) => {
       path: `/slicemasters/${i + 1}`,
       component: path.resolve('./src/pages/slicemasters.js'),
       // context is passed to the page/template upon creation under pageContext prop;
-      // context can also be accessed inside graphql page query as a variable(i.e. query($skip)). 
+      // context can also be accessed inside graphql page query as a variable(i.e. query($skip)).
       context: {
         skip: i * pageSize,
         currentPage: i + 1,
-        pageSize
-      }
+        pageSize,
+      },
     });
   });
 };
@@ -133,7 +142,7 @@ export const createPages = async (params) => {
   await Promise.all([
     convertPizzasToPages(params),
     createPizzaListByTopping(params),
-    convertSlicemastersIntoPages(params)
+    convertSlicemastersIntoPages(params),
   ]);
   // 1. PIZZAS
   // 2. TOPPINGS
